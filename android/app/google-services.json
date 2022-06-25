@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "694019098490",
+    "project_id": "sharedtask-90eca",
+    "storage_bucket": "sharedtask-90eca.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:694019098490:android:b3ac16aed9f04b476db8c3",
+        "android_client_info": {
+          "package_name": "com.avs.sharedtask"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "694019098490-frnp98jp4j7v702k5qmp7falp7tfjjp1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDhY6YE_RV0K_o4nCUypt44xi7ZMUs3ylA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "694019098490-frnp98jp4j7v702k5qmp7falp7tfjjp1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

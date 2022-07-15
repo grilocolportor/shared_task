@@ -7,10 +7,11 @@ import 'package:sharedtask/app/modules/signup/controllers/signup_controller.dart
 import '../../home/views/home_view.dart';
 
 class SignUpView extends GetView<SignupController> {
-  final SignupController _signupController = Get.put(SignupController());
+  final SignupController signupController = Get.put(SignupController());
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _userNameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +24,14 @@ class SignUpView extends GetView<SignupController> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            SizedBox(
+              width: MediaQuery.of(context).size.width / 2,
+              child: TextField(
+                controller: _userNameController,
+                decoration: const InputDecoration(hintText: 'Username'),
+              ),
+            ),
+            const SizedBox(height: 30.0),
             SizedBox(
               width: MediaQuery.of(context).size.width / 2,
               child: TextField(
@@ -44,11 +53,14 @@ class SignUpView extends GetView<SignupController> {
             const SizedBox(height: 30.0),
             ElevatedButton(
               onPressed: () async {
-                await _signupController
+                await signupController
                     .createUser(
                         email: _emailController.text,
                         password: _passwordController.text)
                     .then((value) {
+                  signupController.userName.value = _userNameController.text;
+                  signupController.userEmail.value = _emailController.text;
+                  signupController.addNewUser();
                   value.fold((l) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
@@ -58,7 +70,7 @@ class SignUpView extends GetView<SignupController> {
                   }, (r) {
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
-                        builder: (context) => HomeView(),
+                        builder: (context) => const HomeView(),
                       ),
                     );
                   });

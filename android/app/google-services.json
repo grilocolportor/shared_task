@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "694019098490",
-    "project_id": "sharedtask-90eca",
-    "storage_bucket": "sharedtask-90eca.appspot.com"
+    "project_number": "583865163050",
+    "project_id": "shared-task-7150f",
+    "storage_bucket": "shared-task-7150f.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:694019098490:android:b3ac16aed9f04b476db8c3",
+        "mobilesdk_app_id": "1:583865163050:android:0e8f61a87ae147b98c9253",
         "android_client_info": {
           "package_name": "com.avs.sharedtask"
         }
       },
       "oauth_client": [
         {
-          "client_id": "694019098490-frnp98jp4j7v702k5qmp7falp7tfjjp1.apps.googleusercontent.com",
+          "client_id": "583865163050-alglg7a77fr2a79p67onjl2p88ddr2cg.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDhY6YE_RV0K_o4nCUypt44xi7ZMUs3ylA"
+          "current_key": "AIzaSyBHoiLJeLwcT3Ozauv4TeKf-fefKKAMCTk"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "694019098490-frnp98jp4j7v702k5qmp7falp7tfjjp1.apps.googleusercontent.com",
+              "client_id": "583865163050-alglg7a77fr2a79p67onjl2p88ddr2cg.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

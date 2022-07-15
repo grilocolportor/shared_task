@@ -3,11 +3,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sharedtask/app/modules/login/controllers/login_controller.dart';
+import 'package:sharedtask/app/modules/signup/views/signup_view.dart';
 
 import '../../home/views/home_view.dart';
 
 class LoginView extends GetView<LoginController> {
- final LoginController _signupController = Get.put(LoginController());
+  final LoginController loginController = Get.put(LoginController());
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -44,7 +45,7 @@ class LoginView extends GetView<LoginController> {
             const SizedBox(height: 30.0),
             ElevatedButton(
               onPressed: () async {
-                await _signupController
+                await loginController
                     .loginUser(
                         email: _emailController.text,
                         password: _passwordController.text)
@@ -56,15 +57,27 @@ class LoginView extends GetView<LoginController> {
                       ),
                     );
                   }, (r) {
+                    loginController.readUser();
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
-                        builder: (context) => HomeView(),
+                        builder: (context) => const HomeView(),
                       ),
                     );
                   });
                 });
               },
-              child: const Text('Create Account'),
+              child: const Text('Login'),
+            ),
+            const SizedBox(height: 30.0),
+            TextButton(
+              onPressed: () async {
+                 Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) =>  SignUpView(),
+                      ),
+                    );
+              },
+              child: const Text('Login'),
             )
           ],
         ),

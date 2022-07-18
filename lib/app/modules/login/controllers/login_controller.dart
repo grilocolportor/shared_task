@@ -12,6 +12,7 @@ class LoginController extends GetxController {
   final userName = ''.obs;
   final userEmail = ''.obs;
   final userId = ''.obs;
+  final token = ''.obs;
 
   final AuthService _authService = FirebaseAuthService(
     authService: FirebaseAuth.instance,
@@ -55,6 +56,12 @@ class LoginController extends GetxController {
   Future<void> saveUserName(String userName) async {
     SharedPreferences dataStorage = await SharedPreferences.getInstance();
     dataStorage.setString('userName', userName);
+  }
+
+  Future getToken() async {
+    SharedPreferences dataStorage = await SharedPreferences.getInstance();
+
+    token.value = dataStorage.getString('userToken') ?? "";
   }
 
   // Future<void> addNewUser() async {

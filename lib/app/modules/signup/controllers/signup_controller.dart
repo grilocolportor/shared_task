@@ -13,6 +13,7 @@ class SignupController extends GetxController {
   final userName = ''.obs;
   final userEmail = ''.obs;
   final userId = ''.obs;
+  final token = ''.obs;
 
   final AuthService _authService = FirebaseAuthService(
     authService: FirebaseAuth.instance,
@@ -31,6 +32,12 @@ class SignupController extends GetxController {
   @override
   void onClose() {
     super.onClose();
+  }
+
+  Future getToken() async {
+    SharedPreferences dataStorage = await SharedPreferences.getInstance();
+
+    token.value = dataStorage.getString('userToken') ?? "";
   }
 
   Future<Either<String, UserEntity>> createUser(

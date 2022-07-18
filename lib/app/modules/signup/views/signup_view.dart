@@ -15,6 +15,7 @@ class SignUpView extends GetView<SignupController> {
 
   @override
   Widget build(BuildContext context) {
+    signupController.getToken();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Create Account'),
@@ -70,8 +71,8 @@ class SignUpView extends GetView<SignupController> {
                   }, (r) {
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
-                        builder: (context) => const HomeView(),
-                      ),
+                          builder: (context) =>
+                              HomeView(token: signupController.token.value)),
                     );
                   });
                 });

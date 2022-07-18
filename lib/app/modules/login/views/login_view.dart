@@ -15,6 +15,7 @@ class LoginView extends GetView<LoginController> {
 
   @override
   Widget build(BuildContext context) {
+    loginController.getToken();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Create Account'),
@@ -60,7 +61,8 @@ class LoginView extends GetView<LoginController> {
                     loginController.readUser();
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
-                        builder: (context) => const HomeView(),
+                        builder: (context) =>
+                            HomeView(token: loginController.token.value),
                       ),
                     );
                   });
@@ -71,11 +73,11 @@ class LoginView extends GetView<LoginController> {
             const SizedBox(height: 30.0),
             TextButton(
               onPressed: () async {
-                 Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) =>  SignUpView(),
-                      ),
-                    );
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(
+                    builder: (context) => SignUpView(),
+                  ),
+                );
               },
               child: const Text('Login'),
             )

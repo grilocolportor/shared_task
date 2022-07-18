@@ -45,14 +45,14 @@ class HomeView extends GetView<HomeController> {
                           final DocumentSnapshot documentSnapshot =
                               snapshot.data!.docs[index];
 
-                          for (var element in snapshot.data!.docs) {
-                            if (element.get('userCreate') != null) {
-                              homeController.creatorTask.value = token!
-                                      .contains(documentSnapshot['userCreate'])
+                          homeController.creatorTask.value =
+                              token!.contains(documentSnapshot['userCreate'])
                                   ? true
                                   : false;
-                            }
-                          }
+
+                          homeController.shared.value.clear();
+                          homeController.shared.value =
+                              documentSnapshot['shared'];
 
                           return Card(
                             margin: const EdgeInsets.all(5),
@@ -170,12 +170,13 @@ class HomeView extends GetView<HomeController> {
                           homeController.taskTitle.value = _taskController.text;
                           homeController.done.value = 'todo';
                           homeController.taskDetails.value = '';
+
                           if (homeController.shared.value[0].isEmpty) {
                             homeController.shared.value.remove('');
                           }
 
-                          homeController.shared.value
-                              .add(dataStorage.getString('userToken')!);
+                          // homeController.shared.value
+                          //     .add(dataStorage.getString('userToken')!);
                           homeController.addNewTask();
                           _taskController.text = '';
 

@@ -21,7 +21,7 @@ class HomeController extends GetxController {
   var taskDetails = ''.obs;
   var taskTitle = ''.obs;
   var done = ''.obs;
-  var shared = [''].obs;
+  var shared = [].obs;
   var id = ''.obs;
 
   var creatorTask = false.obs;

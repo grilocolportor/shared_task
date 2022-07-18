@@ -114,9 +114,9 @@ class TaskDetailsView extends GetView<TaskDetailsController> {
                       taskDetailsController.taskTitle.value =
                           _taskController.text;
 
-                      taskDetailsController.shared.value.clear();
-                      taskDetailsController.shared.value
-                          .addAll(documentSnapshot!['shared']);
+                      // taskDetailsController.shared.value.clear();
+                       taskDetailsController.shared.value
+                           .addAll(documentSnapshot!['shared']);
 
                       taskDetailsController.updateTask();
                       _taskController.text = '';

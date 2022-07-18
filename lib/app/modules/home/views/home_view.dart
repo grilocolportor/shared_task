@@ -171,12 +171,8 @@ class HomeView extends GetView<HomeController> {
                           homeController.done.value = 'todo';
                           homeController.taskDetails.value = '';
 
-                          if (homeController.shared.value[0].isEmpty) {
-                            homeController.shared.value.remove('');
-                          }
-
-                          // homeController.shared.value
-                          //     .add(dataStorage.getString('userToken')!);
+                          homeController.shared.value.clear();
+                          homeController.shared.value.add(dataStorage.getString('userToken')!);
                           homeController.addNewTask();
                           _taskController.text = '';
 

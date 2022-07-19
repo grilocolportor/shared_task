@@ -1,6 +1,6 @@
 //
 
-// ignore_for_file: no_leading_underscores_for_local_identifiers, invalid_use_of_protected_member
+// ignore_for_file: no_leading_underscores_for_local_identifiers, invalid_use_of_protected_member, prefer_typing_uninitialized_variables, unused_local_variable
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +14,8 @@ class HomeView extends GetView<HomeController> {
   const HomeView({this.token, Key? key}) : super(key: key);
 
   final String? token;
+
+  
   // initMethod(context) async {
   //   SharedPreferences dataStorage = await SharedPreferences.getInstance();
   //   token = dataStorage.getString('userToken') ?? "";
@@ -22,6 +24,12 @@ class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     // WidgetsBinding.instance.addPostFrameCallback((_) => initMethod(context));
+
+    var size,height,width;
+
+    size = MediaQuery.of(context).size;
+    height = size.height;
+    width = size.width;
 
     final FireBaseService fbs = FireBaseService(token: token);
     HomeController homeController = Get.put(HomeController());
@@ -34,77 +42,72 @@ class HomeView extends GetView<HomeController> {
         children: [
           const SizedBox(height: 15.0),
           Expanded(
-            child: Center(
-              child: StreamBuilder(
-                stream: fbs.query.snapshots(),
-                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.hasData) {
-                    return ListView.builder(
-                        itemCount: snapshot.data!.docs.length,
-                        itemBuilder: (context, index) {
-                          final DocumentSnapshot documentSnapshot =
-                              snapshot.data!.docs[index];
+            child: StreamBuilder(
+              stream: fbs.query.snapshots(),
+              builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                if (snapshot.hasData) {
+                  return ListView.builder(
+                      itemCount: snapshot.data!.docs.length,
+                      itemBuilder: (context, index) {
+                        final DocumentSnapshot documentSnapshot =
+                            snapshot.data!.docs[index];
 
-                          homeController.creatorTask.value =
-                              token!.contains(documentSnapshot['userCreate'])
-                                  ? true
-                                  : false;
+                        homeController.creatorTask.value =
+                            token!.contains(documentSnapshot['userCreate'])
+                                ? true
+                                : false;
 
-                          homeController.shared.value.clear();
-                          homeController.shared.value =
-                              documentSnapshot['shared'];
+                        homeController.shared.value.clear();
+                        homeController.shared.value =
+                            documentSnapshot['shared'];
 
-                          return Card(
-                            margin: const EdgeInsets.all(5),
-                            child: ListTile(
-                              title: Text(documentSnapshot['taskTitle'] ?? ''),
-                              subtitle:
-                                  Text(documentSnapshot['taskDetail'] ?? ''),
-                              trailing: SizedBox(
-                                width: 150,
-                                child: Expanded(
-                                  child: Row(
-                                    children: [
-                                      // Press this button to edit a single product
-                                      IconButton(
-                                          icon: const Icon(Icons.update),
-                                          onPressed: () =>
-                                              Get.to(TaskDetailsView(
-                                                documentSnapshot:
-                                                    documentSnapshot,
-                                              ))), // homeController.updateTask(documentSnapshot.id)),
-                                      // // This icon button is used to delete a single product
-                                      homeController.creatorTask.value
-                                          ? IconButton(
-                                              icon: const Icon(Icons.delete),
-                                              onPressed: () {
-                                                homeController.deleteTask(
+                        return Card(
+                          margin: const EdgeInsets.all(5),
+                          child: ListTile(
+                            title: Text(documentSnapshot['taskTitle'] ?? ''),
+                            subtitle:
+                                Text(documentSnapshot['taskDetail'] ?? ''),
+                            trailing: SizedBox(
+                              width: width/2.8,
+                              child: Row(
+                                children: [
+                                  // Press this button to edit a single product
+                                  
+                                  IconButton(
+                                      icon: const Icon(Icons.update),
+                                      onPressed: () => Get.to(TaskDetailsView(
+                                            documentSnapshot: documentSnapshot,
+                                          ))), // homeController.updateTask(documentSnapshot.id)),
+                                  // // This icon button is used to delete a single product
+                                  homeController.creatorTask.value
+                                      ? IconButton(
+                                          icon: const Icon(Icons.delete),
+                                          onPressed: () {
+                                            homeController
+                                                .deleteTask(documentSnapshot.id);
+                                            homeController
+                                                .deleteTaskFromUserCollection(
                                                     documentSnapshot.id);
-                                                homeController
-                                                    .deleteTaskFromUserCollection(
-                                                        documentSnapshot.id);
-                                              })
-                                          : Container(),
-                                      IconButton(
-                                        icon: const Icon(
-                                          Icons.check_circle,
-                                        ),
-                                        onPressed: () => homeController
-                                            .deleteTask(documentSnapshot.id),
-                                      ),
-                                    ],
+                                          })
+                                      : Container(),
+                                  IconButton(
+                                    icon: const Icon(
+                                      Icons.check_circle,
+                                    ),
+                                    onPressed: () => homeController
+                                        .deleteTask(documentSnapshot.id),
                                   ),
-                                ),
+                                ],
                               ),
                             ),
-                          );
-                        });
-                  }
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                },
-              ),
+                          ),
+                        );
+                      });
+                }
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
             ),
           ),
         ],
@@ -172,7 +175,8 @@ class HomeView extends GetView<HomeController> {
                           homeController.taskDetails.value = '';
 
                           homeController.shared.value.clear();
-                          homeController.shared.value.add(dataStorage.getString('userToken')!);
+                          homeController.shared.value
+                              .add(dataStorage.getString('userToken')!);
                           homeController.addNewTask();
                           _taskController.text = '';
 

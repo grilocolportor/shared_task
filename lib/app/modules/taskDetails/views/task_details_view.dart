@@ -32,12 +32,9 @@ class TaskDetailsView extends GetView<TaskDetailsController> {
       ),
       body: Center(
         child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Obx(
               () => Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  // ignore: prefer_const_literals_to_create_immutables
                   children: [
                     const Text('Created at:'),
                     const Padding(
@@ -113,15 +110,15 @@ class TaskDetailsView extends GetView<TaskDetailsController> {
                           _detailsController.text;
                       taskDetailsController.taskTitle.value =
                           _taskController.text;
-
+        
                       // taskDetailsController.shared.value.clear();
                        taskDetailsController.shared.value
                            .addAll(documentSnapshot!['shared']);
-
+        
                       taskDetailsController.updateTask();
                       _taskController.text = '';
                       _detailsController.text = '';
-
+        
                       // Hide the bottom sheet
                       Navigator.of(context).pop();
                     },

@@ -29,6 +29,10 @@ class FireBaseService {
     query = tasks.where("shared", arrayContains: token);
     userQuery = users.where("token", isEqualTo: token);
   }
+
+  Future getToken() async{
+    
+  }
   
 
   Future<String> addNewtask({required Map<String, dynamic> taskMap}) async {

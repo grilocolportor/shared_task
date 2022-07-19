@@ -16,13 +16,14 @@ class HomeController extends GetxController {
 
   var taskList = [].obs;
 
-  var token = "";
+  var token = '';
 
   var taskDetails = ''.obs;
   var taskTitle = ''.obs;
   var done = ''.obs;
   var shared = [].obs;
   var id = ''.obs;
+  var userCreate = ''.obs;
 
   var creatorTask = false.obs;
   var userName = ''.obs;
@@ -31,9 +32,9 @@ class HomeController extends GetxController {
 
   @override
   void onInit() async {
-    SharedPreferences dataStorage = await SharedPreferences.getInstance();
-    token = dataStorage.getString('userToken') ?? "";
-    userName.value = dataStorage.getString('userName') ?? '';
+    // SharedPreferences dataStorage = await SharedPreferences.getInstance();
+    // token.value = dataStorage.getString('userToken') ?? "";
+    // userName.value = dataStorage.getString('userName') ?? '';
   }
 
   @override
@@ -46,6 +47,12 @@ class HomeController extends GetxController {
     super.onClose();
   }
 
+  // Future<void> getToken() async {
+  //   SharedPreferences dataStorage = await SharedPreferences.getInstance();
+  //   token.value = dataStorage.getString('userToken') ?? "";
+  //   userName.value = dataStorage.getString('userName') ?? '';
+  // }
+
   Future<void> addNewTask() async {
     Map<String, dynamic> taskMap = TasksModel(
             dateCreate: Timestamp.now(),
@@ -53,7 +60,7 @@ class HomeController extends GetxController {
             taskDetail: taskDetails.value,
             taskTitle: taskTitle.value,
             done: done.value,
-            userCreate: token)
+            userCreate: userCreate.value)
         .toFirestore();
     String idTask = await fbs.addNewtask(taskMap: taskMap);
     await addTaskToUserCollection(idTask);
@@ -69,7 +76,7 @@ class HomeController extends GetxController {
             taskDetail: taskDetails.value,
             taskTitle: taskTitle.value,
             done: done.value,
-            userCreate: token)
+            userCreate: userCreate.value)
         .toFirestore();
     fbs.tasks.doc(id.value).update(taskMap);
   }
@@ -79,7 +86,7 @@ class HomeController extends GetxController {
   }
 
   Future<void> addTaskToUserCollection(String taskId) async {
-    fbs.userQuery.where('token', isEqualTo: token).get().then((value) {
+    fbs.userQuery.where('token', isEqualTo: userCreate.value).get().then((value) {
       DocumentSnapshot documentSnapshot = value.docs[0];
 
       Map<String, dynamic> userMap = {

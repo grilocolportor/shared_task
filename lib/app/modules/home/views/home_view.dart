@@ -11,24 +11,23 @@ import 'package:sharedtask/app/modules/taskDetails/views/task_details_view.dart'
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
-  const HomeView({Key? key}) : super(key: key);
+  HomeView({Key? key}) : super(key: key);
 
-  // String token;
+  var token;
 
-  // initMethod(context) async {
-  //   SharedPreferences dataStorage = await SharedPreferences.getInstance();
-  //   token = dataStorage.getString('userToken') ?? "";
-  // }
-
-  Future<String> gettoken() async{
+  initMethod(context) async {
     SharedPreferences dataStorage = await SharedPreferences.getInstance();
-    return dataStorage.getString('userToken') ?? "";
+    token = dataStorage.getString('userToken') ?? "";
   }
+
+  // Future<String> gettoken() async{
+  //   SharedPreferences dataStorage = await SharedPreferences.getInstance();
+  //   return dataStorage.getString('userToken') ?? "";
+  // }
 
   @override
   Widget build(BuildContext context) {
-    //WidgetsBinding.instance.addPostFrameCallback((_) => initMethod(context));
-
+    WidgetsBinding.instance.addPostFrameCallback((_) => initMethod(context));
 
     var size, height, width;
 
@@ -36,11 +35,9 @@ class HomeView extends GetView<HomeController> {
     height = size.height;
     width = size.width;
 
-    
     HomeController homeController = Get.put(HomeController());
-    
 
-    final FireBaseService fbs = FireBaseService(token: homeController.token);
+    final FireBaseService fbs = FireBaseService(token: token);
 
     return Scaffold(
       appBar: AppBar(
@@ -61,7 +58,7 @@ class HomeView extends GetView<HomeController> {
                             snapshot.data!.docs[index];
 
                         homeController.creatorTask.value =
-                            homeController.token.contains(documentSnapshot['userCreate'])
+                            token.contains(documentSnapshot['userCreate'])
                                 ? true
                                 : false;
 
@@ -76,7 +73,7 @@ class HomeView extends GetView<HomeController> {
                             subtitle:
                                 Text(documentSnapshot['taskDetail'] ?? ''),
                             trailing: SizedBox(
-                              width: width / 2.8,
+                              width: width / 2.7,
                               child: Row(
                                 children: [
                                   // Press this button to edit a single product
@@ -181,7 +178,7 @@ class HomeView extends GetView<HomeController> {
                           homeController.taskTitle.value = _taskController.text;
                           homeController.done.value = 'todo';
                           homeController.taskDetails.value = '';
-
+                          homeController.userCreate.value = token;
                           homeController.shared.value.clear();
                           homeController.shared.value
                               .add(dataStorage.getString('userToken')!);

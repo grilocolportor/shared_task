@@ -14,13 +14,20 @@ class SearchUsersView extends GetView<SearchUsersController> {
   final TextEditingController searchValueController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    var size, height, width;
+
+    size = MediaQuery.of(context).size;
+    height = size.height;
+    width = size.width;
     return Scaffold(
       appBar: AppBar(
           title: _searchTextField(),
           centerTitle: true,
-          leading: IconButton(onPressed: () {
-            Get.back(result:searchUsersController.userListSelected);
-          }, icon: const Icon(Icons.arrow_back)),
+          leading: IconButton(
+              onPressed: () {
+                Get.back(result: searchUsersController.userListSelected);
+              },
+              icon: const Icon(Icons.arrow_back)),
           actions: [
             IconButton(
                 icon: const Icon(Icons.search),
@@ -49,24 +56,23 @@ class SearchUsersView extends GetView<SearchUsersController> {
                       margin: const EdgeInsets.all(5),
                       child: ListTile(
                         title: Text(documentSnapshot['userName'] ?? ''),
-                        subtitle:
-                             Text(documentSnapshot['userEmail'] ?? ''),
+                        subtitle: Text(documentSnapshot['userEmail'] ?? ''),
                         trailing: SizedBox(
-                          width: 50,
-                          child: Expanded(
-                            child: Row(
-                              children: [
-                                // Press this button to edit a single product
+                          width: width/8,
+                          child: Row(
+                            children: [
+                              // Press this button to edit a single product
 
-                                IconButton(
-                                  icon: const Icon(
-                                    Icons.check_circle,
-                                  ),
-                                  onPressed: () =>
-                                      searchUsersController.toogleButtomCheckChange(documentSnapshot.id, documentSnapshot['token']),
+                              IconButton(
+                                icon: const Icon(
+                                  Icons.check_circle,
                                 ),
-                              ],
-                            ),
+                                onPressed: () => searchUsersController
+                                    .toogleButtomCheckChange(
+                                        documentSnapshot.id,
+                                        documentSnapshot['token']),
+                              ),
+                            ],
                           ),
                         ),
                       ),

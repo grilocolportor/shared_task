@@ -16,6 +16,13 @@ class TaskshareduserView extends GetView<TaskshareduserController> {
   final String? idTask;
   @override
   Widget build(BuildContext context) {
+
+    var size,height,width;
+
+    size = MediaQuery.of(context).size;
+    height = size.height;
+    width = size.width;
+
     TaskshareduserController taskshareduserController =
         Get.put(TaskshareduserController());
     final FireBaseService fbs = FireBaseService();
@@ -41,45 +48,42 @@ class TaskshareduserView extends GetView<TaskshareduserController> {
                       itemBuilder: (context, index) {
                         final DocumentSnapshot documentSnapshot =
                             snapshot.data!.docs[index];
-                        print('----------${snapshot.data!.docs.length}');
                         return Card(
                           margin: const EdgeInsets.all(5),
                           child: ListTile(
                             title: Text(documentSnapshot['userName'] ?? ''),
                             subtitle: Text(documentSnapshot['userEmail'] ?? ''),
                             trailing: SizedBox(
-                              width: 150,
-                              child: Expanded(
-                                child: Row(
-                                  children: [
-                                    // Press this button to edit a single product
-                                    // IconButton(
-                                    //     icon: const Icon(Icons.update),
-                                    //     onPressed: () =>
-                                    //         Get.to(TaskDetailsView(
-                                    //           documentSnapshot:
-                                    //               documentSnapshot,
-                                    //         ))), // homeController.updateTask(documentSnapshot.id)),
-                                    // // // This icon button is used to delete a single product
-                                    // homeController.creatorTask.value ?
-                                    // IconButton(
-                                    //     icon: const Icon(Icons.delete),
-                                    //     onPressed: () {
-                                    //       homeController.deleteTask(
-                                    //           documentSnapshot.id);
-                                    //       homeController
-                                    //           .deleteTaskFromUserCollection(
-                                    //               documentSnapshot.id);
-                                    //     }) : Container(),
-                                    // IconButton(
-                                    //   icon: const Icon(
-                                    //     Icons.check_circle,
-                                    //   ),
-                                    //   onPressed: () => homeController
-                                    //       .deleteTask(documentSnapshot.id),
-                                    // ),
-                                  ],
-                                ),
+                              width: width/2.8,
+                              child: Row(
+                                children: [
+                                  // Press this button to edit a single product
+                                  // IconButton(
+                                  //     icon: const Icon(Icons.update),
+                                  //     onPressed: () =>
+                                  //         Get.to(TaskDetailsView(
+                                  //           documentSnapshot:
+                                  //               documentSnapshot,
+                                  //         ))), // homeController.updateTask(documentSnapshot.id)),
+                                  // // // This icon button is used to delete a single product
+                                  // homeController.creatorTask.value ?
+                                  // IconButton(
+                                  //     icon: const Icon(Icons.delete),
+                                  //     onPressed: () {
+                                  //       homeController.deleteTask(
+                                  //           documentSnapshot.id);
+                                  //       homeController
+                                  //           .deleteTaskFromUserCollection(
+                                  //               documentSnapshot.id);
+                                  //     }) : Container(),
+                                  // IconButton(
+                                  //   icon: const Icon(
+                                  //     Icons.check_circle,
+                                  //   ),
+                                  //   onPressed: () => homeController
+                                  //       .deleteTask(documentSnapshot.id),
+                                  // ),
+                                ],
                               ),
                             ),
                           ),

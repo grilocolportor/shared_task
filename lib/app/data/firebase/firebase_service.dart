@@ -29,6 +29,7 @@ class FireBaseService {
     query = tasks.where("shared", arrayContains: token);
     userQuery = users.where("token", isEqualTo: token);
   }
+  
 
   Future<String> addNewtask({required Map<String, dynamic> taskMap}) async {
     return await tasks.add(taskMap).then((value) {
@@ -48,7 +49,6 @@ class FireBaseService {
   Future<void> removeTaskFromUserColelction(String taskId) async {
     users.where('tasks', arrayContains: taskId).snapshots().forEach((element) {
       element.docs.forEach((value) {
-        print('----------${value.id}');
         users.doc(value.id).update({
           'tasks': FieldValue.arrayRemove([taskId])
         });

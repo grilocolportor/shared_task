@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_null_comparison, must_be_immutable, prefer_typing_uninitialized_variables, unused_field
+// ignore_for_file: unnecessary_null_comparison, must_be_immutable, prefer_typing_uninitialized_variables, unused_field, prefer_const_constructors
 
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -17,7 +17,7 @@ class OnboardingView extends GetView<OnboardingController> {
   initMethod(context) async {
     await _onboardingController.getToken().then((value) {
       if (value.isNotEmpty) {
-        Get.off(HomeView(token: value,));
+        Get.off(HomeView());
       } else {
         Get.off(LoginView());
       }

@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors
+// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -72,7 +72,7 @@ class SignUpView extends GetView<SignupController> {
                     Navigator.of(context).pushReplacement(
                       MaterialPageRoute(
                           builder: (context) =>
-                              HomeView(token: signupController.token.value)),
+                              HomeView()),
                     );
                   });
                 });

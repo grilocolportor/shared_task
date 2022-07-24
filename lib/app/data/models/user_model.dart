@@ -5,7 +5,7 @@ class UserModel {
   final String? token;
   final String? userEmail;
   final String? userName;
-  final List<String>? tasks;
+  final List? tasks;
   final String? imagePath;
 
   UserModel({this.id, this.token, this.userEmail, this.userName, this.tasks, this.imagePath});
@@ -19,15 +19,14 @@ class UserModel {
         imagePath = json['imagePath'];
 
   factory UserModel.fromFirestore(
-      DocumentSnapshot<Map<String, dynamic>> snapshot,
-      SnapshotOptions? options) {
+      DocumentSnapshot<Map<String, dynamic>> snapshot) {
     final data = snapshot.data();
     return UserModel(
       id: data?['id'],
       token: data?['token'],
       userEmail: data?['userEmail'],
       userName: data?['userName'],
-      imagePath: data?['taskDetail'],
+      imagePath: data?['imagePath'],
       tasks: data?['tasks'] is Iterable ? List.from(data?['tasks']) : null,
     );
   }

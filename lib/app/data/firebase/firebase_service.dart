@@ -2,6 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/state_manager.dart';
+import 'package:sharedtask/app/data/models/user_model.dart';
 
 class FireBaseService {
   final db = FirebaseFirestore.instance;
@@ -30,11 +31,6 @@ class FireBaseService {
     userQuery = users.where("token", isEqualTo: token);
   }
 
-  Future getToken() async{
-    
-  }
-  
-
   Future<String> addNewtask({required Map<String, dynamic> taskMap}) async {
     return await tasks.add(taskMap).then((value) {
       return value.id;
@@ -52,11 +48,11 @@ class FireBaseService {
 
   Future<void> removeTaskFromUserColelction(String taskId) async {
     users.where('tasks', arrayContains: taskId).snapshots().forEach((element) {
-      element.docs.forEach((value) {
+      for (var value in element.docs) {
         users.doc(value.id).update({
           'tasks': FieldValue.arrayRemove([taskId])
         });
-      });
+      }
     });
   }
 
@@ -68,19 +64,17 @@ class FireBaseService {
     if (flag.contains('email')) {
       return searchUser
           .where("userEmail", isGreaterThanOrEqualTo: search)
-          .where("userEmail", isLessThan: search + 'z')
+          .where("userEmail", isLessThan: '${search}z')
           .get()
           .then((value) {
-        print('------------${value.size})}');
         return value.docs;
       });
     } else {
       return searchUser
           .where("userName", isGreaterThanOrEqualTo: search)
-          .where("userName", isLessThan: search + 'z')
+          .where("userName", isLessThan: '${search}z')
           .get()
           .then((value) {
-        print('------------${value.docs}');
         return value.docs;
       });
     }

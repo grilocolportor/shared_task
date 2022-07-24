@@ -69,11 +69,12 @@ class SignUpView extends GetView<SignupController> {
                       ),
                     );
                   }, (r) {
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              HomeView()),
+                    signupController.getToken().then((value) {
+                       Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => HomeView(token: signupController.token.value,)),
                     );
+                    });
+                   
                   });
                 });
               },

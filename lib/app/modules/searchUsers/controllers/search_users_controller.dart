@@ -1,12 +1,15 @@
+// ignore_for_file: list_remove_unrelated_type
+
 import 'package:get/get.dart';
 import 'package:sharedtask/app/data/firebase/firebase_service.dart';
+import 'package:sharedtask/app/data/models/user_model.dart';
 
 class SearchUsersController extends GetxController {
   final FireBaseService fbs = FireBaseService();
 
   List getList = [].obs;
 
-  Map<String, String> userListSelected = {'':''}.obs;
+  List<UserModel> userListSelected = [UserModel()].obs;
 
   var buttomToggleCheck = false.obs;
 
@@ -25,19 +28,18 @@ class SearchUsersController extends GetxController {
     super.onClose();
   }
 
-  void toogleButtomCheckChange(String idUser, String token) {
+  void toogleButtomCheckChange(UserModel userModel) {
     userListSelected.remove('');
     buttomToggleCheck.value = !buttomToggleCheck.value;
     if (buttomToggleCheck.value) {
-      userListSelected.addAll({idUser: token});
+      userListSelected.add(userModel);
     } else {
-      userListSelected.remove({idUser: token});
+      userListSelected.remove({userModel});
     }
   }
 
   Future search(String flag, String searchParam) async {
     getList.clear();
     getList.addAll(await fbs.searchUserByParam(flag, searchParam));
-    print('--------${getList.length}');
   }
 }

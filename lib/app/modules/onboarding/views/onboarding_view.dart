@@ -17,7 +17,7 @@ class OnboardingView extends GetView<OnboardingController> {
   initMethod(context) async {
     await _onboardingController.getToken().then((value) {
       if (value.isNotEmpty) {
-        Get.off(HomeView());
+        Get.off(HomeView(token: value,));
       } else {
         Get.off(LoginView());
       }

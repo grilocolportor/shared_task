@@ -1,4 +1,4 @@
-// ignore_for_file: use_key_in_widget_constructors, prefer_const_constructors
+// ignore_for_file: use_key_in_widget_constructors
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -59,12 +59,14 @@ class LoginView extends GetView<LoginController> {
                     );
                   }, (r) {
                     loginController.readUser();
-                    Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(
-                        builder: (context) =>
-                            HomeView(),
-                      ),
-                    );
+                    loginController.getToken().then((value) {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              HomeView(token: loginController.token.value),
+                        ),
+                      );
+                    });
                   });
                 });
               },

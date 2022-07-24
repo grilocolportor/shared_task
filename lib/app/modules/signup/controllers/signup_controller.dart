@@ -14,6 +14,7 @@ class SignupController extends GetxController {
   final userEmail = ''.obs;
   final userId = ''.obs;
   final token = ''.obs;
+  final imagePath = ''.obs;
 
   final AuthService _authService = FirebaseAuthService(
     authService: FirebaseAuth.instance,
@@ -62,6 +63,7 @@ class SignupController extends GetxController {
       'userName': userName.value,
       'userEmail': userEmail.value,
       'token': dataStorage.getString('userToken'),
+      'imagePath': imagePath.value,
       'tasks': [''],
     };
     await fbs.adduser(userMap: userMap);

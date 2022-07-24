@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sharedtask/app/data/firebase/firebase_service.dart';
 import 'package:sharedtask/app/data/models/tasks_model.dart';
+import 'package:sharedtask/app/data/models/user_model.dart';
 import 'package:sharedtask/app/modules/searchUsers/views/search_users_view.dart';
 
 import '../controllers/taskshareduser_controller.dart';
@@ -16,8 +17,7 @@ class TaskshareduserView extends GetView<TaskshareduserController> {
   final String? idTask;
   @override
   Widget build(BuildContext context) {
-
-    var size,height,width;
+    var size, height, width;
 
     size = MediaQuery.of(context).size;
     height = size.height;
@@ -54,7 +54,7 @@ class TaskshareduserView extends GetView<TaskshareduserController> {
                             title: Text(documentSnapshot['userName'] ?? ''),
                             subtitle: Text(documentSnapshot['userEmail'] ?? ''),
                             trailing: SizedBox(
-                              width: width/2.8,
+                              width: width / 2.8,
                               child: Row(
                                 children: [
                                   // Press this button to edit a single product
@@ -101,29 +101,22 @@ class TaskshareduserView extends GetView<TaskshareduserController> {
       floatingActionButton: FloatingActionButton(
           child: const Text('Add'),
           onPressed: () async {
-            Map<String, String> retorno = await Get.to(SearchUsersView());
+            List<UserModel> retorno = await Get.to(SearchUsersView());
 
-            //for (var element in retorno) {cel
-            retorno.forEach((key, value) async {
-              if (value.isNotEmpty) {
-                await taskshareduserController.updateTask(
-                  taskId: idTask!,
-                  users: value,
-                );
-              }
-            });
+            for (var element in retorno) {
+              await taskshareduserController.updateTask(
+                taskId: element.id!,
+                users: element.token!,
+              );
+            }
 
-            // }
-            // for (var element in retorno) {
-            retorno.forEach((key, value) async {
-              if (value.isNotEmpty) {
-                await taskshareduserController.addTaskToUserCollection(
-                    idTask!, key);
-              }
-            });
-          }
-          //}
-          ),
+            for (var element in retorno) {
+              await taskshareduserController.addTaskToUserCollection(
+                taskId: element.id!,
+                token: element.token!,
+              );
+            }
+          }),
     );
   }
 }

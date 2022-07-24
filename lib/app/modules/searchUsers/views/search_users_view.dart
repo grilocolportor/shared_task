@@ -1,9 +1,10 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, prefer_typing_uninitialized_variables
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:sharedtask/app/data/models/user_model.dart';
 import '../controllers/search_users_controller.dart';
 
 class SearchUsersView extends GetView<SearchUsersController> {
@@ -14,10 +15,9 @@ class SearchUsersView extends GetView<SearchUsersController> {
   final TextEditingController searchValueController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    var size, height, width;
+    var size, width;
 
     size = MediaQuery.of(context).size;
-    height = size.height;
     width = size.width;
     return Scaffold(
       appBar: AppBar(
@@ -58,20 +58,28 @@ class SearchUsersView extends GetView<SearchUsersController> {
                         title: Text(documentSnapshot['userName'] ?? ''),
                         subtitle: Text(documentSnapshot['userEmail'] ?? ''),
                         trailing: SizedBox(
-                          width: width/8,
+                          width: width / 8,
                           child: Row(
                             children: [
                               // Press this button to edit a single product
 
                               IconButton(
-                                icon: const Icon(
-                                  Icons.check_circle,
-                                ),
-                                onPressed: () => searchUsersController
-                                    .toogleButtomCheckChange(
-                                        documentSnapshot.id,
-                                        documentSnapshot['token']),
-                              ),
+                                  icon: const Icon(
+                                    Icons.check_circle,
+                                  ),
+                                  onPressed: () {
+                                    UserModel userModel = UserModel(
+                                        id: documentSnapshot.id,
+                                        imagePath: documentSnapshot['imagePath'],
+                                        tasks: documentSnapshot['tasks'],
+                                        token: documentSnapshot['token'],
+                                        userEmail:
+                                            documentSnapshot['userEmail'],
+                                        userName: documentSnapshot['userName']);
+
+                                    searchUsersController
+                                        .toogleButtomCheckChange(userModel);
+                                  }),
                             ],
                           ),
                         ),

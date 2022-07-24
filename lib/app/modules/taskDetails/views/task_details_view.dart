@@ -1,10 +1,9 @@
-// ignore_for_file: invalid_use_of_protected_member
+// ignore_for_file: invalid_use_of_protected_member, must_be_immutable
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:sharedtask/app/modules/searchUsers/views/search_users_view.dart';
 import 'package:sharedtask/app/modules/taskshareduser/views/taskshareduser_view.dart';
 
 import '../controllers/task_details_controller.dart';
@@ -110,10 +109,6 @@ class TaskDetailsView extends GetView<TaskDetailsController> {
                           _detailsController.text;
                       taskDetailsController.taskTitle.value =
                           _taskController.text;
-        
-                      // taskDetailsController.shared.value.clear();
-                       taskDetailsController.shared.value
-                           .addAll(documentSnapshot!['shared']);
         
                       taskDetailsController.updateTask();
                       _taskController.text = '';

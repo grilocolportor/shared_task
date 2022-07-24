@@ -22,16 +22,14 @@ class TaskshareduserController extends GetxController {
 
   Future<void> updateTask(
       {required String taskId, required String users}) async {
-    fbs.tasks.doc(taskId).update({"shared": FieldValue.arrayUnion([users])});
+    fbs.tasks.doc(taskId).update({
+      "shared": FieldValue.arrayUnion([users])
+    });
   }
 
-  Future<void> addTaskToUserCollection(String taskId, String token) async {
-    fbs.users.doc(token).update({"tasks": FieldValue.arrayUnion([taskId])});
-    // await fbs.userQuery.where('token', isEqualTo: token).get().then((value) {
-
-    //   fbs.users.doc(token).update({
-    //     'tasks': FieldValue.arrayUnion([taskId])
-    //   });
-    // });
+  Future<void> addTaskToUserCollection({required String taskId, required String token}) async {
+    fbs.users.doc(token).update({
+      "tasks": FieldValue.arrayUnion([taskId])
+    });
   }
 }
